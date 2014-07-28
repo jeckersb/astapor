@@ -28,7 +28,7 @@ class quickstack::neutron::networker (
   $ssl                           = $quickstack::params::ssl,
   $mysql_ca                      = $quickstack::params::mysql_ca,
 ) inherits quickstack::params {
-
+unless $in_kickstart {
   class {'quickstack::openstack_common': }
 
   if str2bool_i("$ssl") {
@@ -106,4 +106,5 @@ class quickstack::neutron::networker (
   class {'quickstack::neutron::firewall::vxlan':
     port => $ovs_vxlan_udp_port,
   }
+}
 }

@@ -36,7 +36,7 @@ class quickstack::neutron::compute (
   $ssl                         = $quickstack::params::ssl,
   $mysql_ca                    = $quickstack::params::mysql_ca,
 ) inherits quickstack::params {
-
+unless $in_kickstart {
   if str2bool_i("$ssl") {
     $qpid_protocol = 'ssl'
     $real_amqp_port = $amqp_ssl_port
@@ -134,4 +134,5 @@ class quickstack::neutron::compute (
   class {'quickstack::neutron::firewall::vxlan':
     port => $ovs_vxlan_udp_port,
   }
+}
 }
