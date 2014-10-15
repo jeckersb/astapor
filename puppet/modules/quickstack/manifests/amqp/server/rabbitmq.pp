@@ -21,6 +21,9 @@ class quickstack::amqp::server::rabbitmq (
 
   class {"::rabbitmq":
     environment_variables => $env,
+    config_variables      => {
+      'hipe_compile'      => true
+    },
     port                  => $amqp_port,
     ssl                   => str2bool_i("$ssl"),
     ssl_management_port   => $amqp_port,

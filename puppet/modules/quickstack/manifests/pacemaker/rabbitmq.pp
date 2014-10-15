@@ -27,6 +27,9 @@ class quickstack::pacemaker::rabbitmq (
     class {"::rabbitmq":
       config_kernel_variables  => {'inet_dist_listen_min' => "${inet_dist_listen}",
                                   'inet_dist_listen_max' => "${inet_dist_listen}"},
+      config_variables         => {
+        'hipe_compile'         => true
+      },
       wipe_db_on_cookie_change => true,
       config_cluster           => true,
       cluster_nodes            => $cluster_nodes,
@@ -83,7 +86,7 @@ class quickstack::pacemaker::rabbitmq (
       stop => !$_enabled,
     } ->
     quickstack::pacemaker::resource::service { 'rabbitmq-server':
-      monitor_params => {"start-delay" => "35s"},
+      monitor_params => {"start-delay" => "120s"},
       clone          => true,
     }
 
