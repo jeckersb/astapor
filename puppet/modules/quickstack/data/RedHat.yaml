@@ -325,6 +325,8 @@ quickstack::pacemaker::params::swift_public_vip: "%{hiera('swift_vip_public')}"
 quickstack::pacemaker::params::swift_user_password: "%hiera('swift_user_password')}"
 
 quickstack::pacemaker::rabbitmq::inet_dist_listen: '35672'
+quickstack::pacemaker::rabbitmq::inet_default_connect_options: '[{raw,6,18,<<5000:64/native>>}]'
+quickstack::pacemaker::rabbitmq::inet_default_listen_options: '[{raw,6,18,<<5000:64/native>>}]'
 
 quickstack::pacemaker::swift::swift_internal_vip: "%{hiera('swift_vip_internal')}"
 quickstack::pacemaker::swift::swift_storage_device: 'device1'

@@ -1,6 +1,9 @@
 class quickstack::pacemaker::rabbitmq (
-  $haproxy_timeout       = '900m',
-  $inet_dist_listen      = '35672'
+  $haproxy_timeout              = '900m',
+  $inet_dist_listen             = '35672',
+  # set TCP_USER_TIMEOUT to 5000ms
+  $inet_default_connect_options = '[{raw,6,18,<<5000:64/native>>}]',
+  $inet_default_listen_options  = '[{raw,6,18,<<5000:64/native>>}]'
 ) {
 
   include quickstack::pacemaker::common
@@ -28,7 +31,9 @@ class quickstack::pacemaker::rabbitmq (
 
     class {"::rabbitmq":
       config_kernel_variables  => {'inet_dist_listen_min' => "${inet_dist_listen}",
-                                  'inet_dist_listen_max' => "${inet_dist_listen}"},
+                                   'inet_dist_listen_max' => "${inet_dist_listen}",
+                                   'inet_default_connect_options' => "${inet_default_connect_options}",
+                                   'inet_default_listen_options' => "${inet_default_listen_options}"},
       wipe_db_on_cookie_change => true,
       config_cluster           => false, # pacemaker will handle it
       node_ip_address          => map_params("local_bind_addr"),
